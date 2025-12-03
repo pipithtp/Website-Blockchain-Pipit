@@ -1,0 +1,268 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Blockchain Simulator - Pastel Edition 🎀</title>
+    <link rel="stylesheet" href="style.css" />
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/elliptic/6.5.4/elliptic.min.js"></script>
+  </head>
+  <body>
+    <nav class="navbar">
+      <div class="logo">Simulator Blockchain - Pipit Handayani</div>
+
+      <div class="hamburger" onclick="toggleMenu()">
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+      <div class="nav-links" id="navLinks">
+        <button id="tab-home" class="active" onclick="nav('home')">Home</button>
+        <button id="tab-about" onclick="nav('about')">About Me</button>
+        <button id="tab-hash" onclick="nav('hash')">Hash</button>
+        <button id="tab-block" onclick="nav('block')">Block</button>
+        <button id="tab-chain" onclick="nav('chain')">Chain</button>
+        <button id="tab-ecc" onclick="nav('ecc')">ECC</button>
+        <button id="tab-consensus" onclick="nav('consensus')">Konsensus</button>
+      </div>
+    </nav>
+
+    <div class="container">
+      <div id="page-home" class="page-section active">
+        <h1>Selamat Datang 🎀</h1>
+        <div id="datetime" style="text-align: center; color: #ff1493; margin-bottom: 20px; font-weight: bold"></div>
+        <p style="text-align: center">
+          Website ini dirancang untuk membantu memahami konsep dan simulasi berbagai teknik dalam bidang Teknologi Blockchain
+
+        </p>
+
+        <div class="menu-grid">
+          <div class="card-menu" onclick="nav('hash')">
+            <h3>Hash</h3>
+            <p>Mengubah teks menjadi hash SHA-256. Hash berubah saat input diubah.</p>
+          </div>
+
+          <div class="card-menu" onclick="nav('block')">
+            <h3>Block</h3>
+            <p>Melatih proses mining untuk mencari nonce dan membuat hash block.</p>
+          </div>
+
+          <div class="card-menu" onclick="nav('chain')">
+            <h3>BlockChain</h3>
+            <p>Menambah block baru yang saling terhubung melalui previous hash.</p>
+          </div>
+
+          <div class="card-menu" onclick="nav('ecc')">
+            <h3>ECC</h3>
+            <p>Membuat key pair dan signature untuk verifikasi digital.</p>
+          </div>
+
+          <div class="card-menu" onclick="nav('consensus')">
+            <h3>Konsensus</h3>
+            <p>Simulasi transaksi antar pengguna dan pembentukan block baru.</p>
+          </div>
+        </div>
+      </div>
+
+      <div id="page-about" class="page-section">
+        <h1>About Me</h1>
+        <div class="about-grid-mixed">
+          
+          <div class="cute-box profile-detail-card">
+             <div class="profile-header-new">
+                 <img src="img/profile.jpg" onerror="this.src='https://via.placeholder.com/150/ffb3d9/ffffff?text=Me'" class="profile-img-new" alt="Foto Profil" />
+                 <div class="profile-text-new">
+                    <h2>Pipit Handayani</h2>
+                    <p class="role-text">Mahasiswa Teknologi Rekayasa Multimedia</p>
+                 </div>
+             </div>
+             
+             <div class="profile-body-new">
+                <h4>Deskripsi Singkat</h4>
+                <p>Saya seorang Mahasiswa Multimedia yang selalu excited dengan dunia coding! Saat ini berfokus pada pengembangan web sambil menyelami tantangan kriptografi. Senang menciptakan solusi interaktif, terutama yang mengintegrasikan konsep canggih seperti Blockchain dan ECC.</p>
+                
+                <h4 style="margin-top: 20px;">Skills</h4>
+                <div class="skill-tags">
+                    <span>HTML/CSS/JS</span>
+                    <span>Blockchain</span>
+                    <span>Kriptografi</span>
+                    <span>UI/UX Designer</span>
+                    <span>Web Development</span>
+                    <span>Multimedia</span>
+                </div>
+             </div>
+
+            <div class="cv-section-new">
+              <p>Lihat pengalaman saya:</p>
+              <a href="cv.pdf" target="_blank" class="btn-action" style="text-decoration: none; display: inline-block; background: #ff1493; width: auto; padding: 8px 20px;">Lihat CV</a>
+            </div>
+          </div>
+
+          <div class="cute-box maps-card-new">
+            <h4>Lokasi Saya</h4>
+            <p>Bisa menghubungi saya di sini:</p>
+            <iframe
+              src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d3957.692178167003!2d112.79117721046906!3d-7.275824292701009!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x2dd7fa10ea2ae883%3A0xbe22c55d60ef09c7!2sPoliteknik%20Elektronika%20Negeri%20Surabaya!5e0!3m2!1sid!2sid!4v1764620387160!5m2!1sid!2sid"
+              width="100%"
+              height="460"
+              style="border: 0; border-radius: 15px"
+              allowfullscreen=""
+              loading="lazy"
+            ></iframe>
+          </div>
+
+          <div class="cute-box form-card-new">
+            <h3>Hubungi Saya</h3>
+            <form>
+              <label>Nama:</label>
+              <input type="text" placeholder="Nama Kamu" />
+              <label>Pesan:</label>
+              <textarea rows="3" placeholder="Isi pesan..."></textarea>
+              <button class="btn-action send-btn">Kirim Pesan</button>
+            </form>
+          </div>
+        </div>
+      </div>
+      <div id="page-hash" class="page-section">
+        <h1>Simulator Hash</h1>
+        <div class="card">
+          <label>Input Data:</label>
+          <textarea id="hash-input" rows="4" placeholder="Ketik sesuatu..."></textarea>
+          <label>Output SHA-256:</label>
+          <div id="hash-output" class="output"></div>
+        </div>
+      </div>
+
+      <div id="page-block" class="page-section">
+        <h1>Single Block</h1>
+        <div class="card">
+          <div style="display: flex; gap: 10px">
+            <div style="flex: 1"><label>Block #:</label><input id="block-number" type="number" value="1" /></div>
+            <div style="flex: 1"><label>Nonce:</label><input id="block-nonce" type="text" /></div>
+          </div>
+
+          <label>Data:</label>
+          <textarea id="block-data" rows="3"></textarea>
+          <label>Timestamp:</label>
+          <input id="block-timestamp" type="text" readonly />
+          <label>Hash:</label>
+          <div id="block-hash" class="output"></div>
+
+          <div style="display: flex; gap: 10px; margin-top: 15px; align-items: flex-end">
+            <div style="flex: 1">
+              <label>Speed:</label>
+              <select id="speed-control">
+                <option value="1">Normal</option>
+                <option value="10">(10x) Lebih Cepat</option>
+                <option value="50">(50x) Lebih Cepat</option>
+              </select>
+            </div>
+            <div style="flex: 1">
+              <button id="btn-mine" class="btn-action">🔨 Mine</button>
+            </div>
+          </div>
+          <div id="mining-status" class="status"></div>
+        </div>
+      </div>
+
+      <div id="page-chain" class="page-section">
+        <h1>Blockchain</h1>
+        <div class="scroll-container">
+          <div id="blockchain"></div>
+        </div>
+        <button id="btn-add-block" class="btn-action" style="width: auto; margin: 20px auto; display: block">+ Tambah Block</button>
+      </div>
+
+      <div id="page-ecc" class="page-section">
+        <h1>ECC Signature</h1>
+        <div class="card">
+          <button id="btn-generate-key" class="btn-action" style="background: #ffb3d9">Generate Key Pair</button>
+          <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 10px">
+            <div><label>Public Key:</label><textarea id="ecc-public" rows="2"></textarea></div>
+            <div><label>Private Key:</label><textarea id="ecc-private" rows="2"></textarea></div>
+          </div>
+          <hr style="border: 1px dashed #ffb3d9; margin: 15px 0" />
+          <label>Pesan:</label><textarea id="ecc-message" rows="2"></textarea>
+          <button id="btn-sign" class="btn-action">Sign</button>
+          <label>Signature:</label><textarea id="ecc-signature" rows="2" readonly></textarea>
+          <button id="btn-verify" class="btn-action" style="background: #ff9f43">Verify</button>
+          <div id="ecc-verify-result" class="output" style="margin-top: 10px; text-align: center; font-weight: bold"></div>
+        </div>
+      </div>
+
+      <div id="page-consensus" class="page-section">
+        <h1>Simulasi Konsensus</h1>
+
+        <div class="wallets">
+          <div class="wallet">
+            <h3>User A</h3>
+            <div>Saldo: <span id="saldo-A">100</span></div>
+            <label>Kirim ke:</label>
+            <select id="receiver-A">
+              <option value="B">User B</option>
+              <option value="C">User C</option>
+            </select>
+            <label>Jumlah:</label>
+            <input id="amount-A" type="number" value="10" />
+            <button id="send-A" class="btn-action" style="margin-top: 5px; font-size: 12px">Kirim 💸</button>
+          </div>
+          <div class="wallet" style="background: #e1bee7; border-color: #ce93d8">
+            <h3 style="color: #8e24aa">User B</h3>
+            <div>Saldo: <span id="saldo-B">100</span></div>
+            <label>Kirim ke:</label>
+            <select id="receiver-B">
+              <option value="A">User A</option>
+              <option value="C">User C</option>
+            </select>
+            <label>Jumlah:</label>
+            <input id="amount-B" type="number" value="10" />
+            <button id="send-B" class="btn-action" style="background: #ba68c8; margin-top: 5px; font-size: 12px">Kirim 💸</button>
+          </div>
+          <div class="wallet" style="background: #b2dfdb; border-color: #80cbc4">
+            <h3 style="color: #00796b">User C</h3>
+            <div>Saldo: <span id="saldo-C">100</span></div>
+            <label>Kirim ke:</label>
+            <select id="receiver-C">
+              <option value="A">User A</option>
+              <option value="B">User B</option>
+            </select>
+            <label>Jumlah:</label>
+            <input id="amount-C" type="number" value="10" />
+            <button id="send-C" class="btn-action" style="background: #4db6ac; margin-top: 5px; font-size: 12px">Kirim 💸</button>
+          </div>
+        </div>
+
+        <div class="card">
+          <label>Mempool (Transaksi Pending):</label>
+          <textarea id="mempool" rows="3" placeholder="Transaksi akan muncul di sini..." readonly style="background: #eee"></textarea>
+
+          <div style="display: flex; gap: 10px; margin-top: 10px">
+            <button id="btn-mine-all" class="btn-action" style="background: #4caf50">Mine Semua</button>
+            <button id="btn-verify-consensus" class="btn-action" style="background: #ff9800">Verify</button>
+            <button id="btn-consensus" class="btn-action" style="background: #2196f3">Konsensus</button>
+          </div>
+        </div>
+
+        <h3>Database Blockchain Tiap User</h3>
+
+        <div class="card" style="padding: 10px">
+          <h4>Database User A</h4>
+          <div id="chain-A" class="chain-row"></div>
+        </div>
+
+        <div class="card" style="padding: 10px">
+          <h4>Database User B</h4>
+          <div id="chain-B" class="chain-row"></div>
+        </div>
+
+        <div class="card" style="padding: 10px">
+          <h4>Database User C</h4>
+          <div id="chain-C" class="chain-row"></div>
+        </div>
+      </div>
+    </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
